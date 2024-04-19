@@ -4,10 +4,22 @@ import { useState } from 'react'
 
 export function AudioContainer() {
   const { volume, updateVolume } = useVideo()
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isMute, setIsMute] = useState<boolean>(false)
+
+  const [currentVolume, setCurrentVideo] = useState<number>(volume)
+
+  const alterMute = (mute: boolean) => {
+    if (mute) {
+      setCurrentVideo(volume)
+      updateVolume(0)
+    } else {
+      updateVolume(currentVolume)
+    }
+    setIsMute(mute)
+  }
   return (
     <div className="flex flex-row h-full items-center">
-      <button onClick={() => setIsOpen(!isOpen)}>
+      <button onClick={() => alterMute(!isMute)}>
         {volume === 0 ? (
           <VolumeX />
         ) : volume < 0.33 ? (
@@ -18,10 +30,7 @@ export function AudioContainer() {
           <Volume2 />
         )}
       </button>
-      <div
-        data-view={isOpen}
-        className="flex items-center overflow-hidden data-[view=false]:hidden"
-      >
+      <div className="flex items-center overflow-hidden">
         <input
           type="range"
           min={0}

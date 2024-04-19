@@ -1,4 +1,5 @@
 'use client'
+import videos, { IVideo } from '@/data/video'
 import {
   createContext,
   ReactNode,
@@ -18,6 +19,9 @@ interface IVideoPlayerContext {
   setNewTime: (time: number) => void
   volume: number
   updateVolume: (volume: number) => void
+  list: IVideo[]
+  selectedVideo?: IVideo
+  handleVideo: (video: IVideo) => void
 }
 
 interface VideoProviderProps {
@@ -35,6 +39,8 @@ const INITIAL_STATE: IVideoPlayerContext = {
   setNewTime: () => {},
   volume: 0,
   updateVolume: () => {},
+  list: [],
+  handleVideo: () => {},
 }
 
 const VideoContext = createContext<IVideoPlayerContext>(
@@ -47,6 +53,7 @@ export function VideoProvider({ children }: VideoProviderProps) {
   const [totalTime, setTotalTime] = useState<number>(0)
   const [volume, setVolume] = useState<number>(1)
   const [isExpanded, setIsExpanded] = useState<boolean>(false)
+  const [selectedVideo, setSelectedVideo] = useState<IVideo>(videos[0])
 
   useEffect(() => {
     const video = document.getElementById('video') as HTMLVideoElement
@@ -74,7 +81,12 @@ export function VideoProvider({ children }: VideoProviderProps) {
     return () => {
       context.clearRect(0, 0, canvas.width, canvas.height)
     }
-  }, [isPlaying])
+  }, [isPlaying, selectedVideo])
+
+  const handleVideo = (video: IVideo) => {
+    setSelectedVideo(video)
+    setIsPlaying(false)
+  }
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying)
@@ -121,6 +133,9 @@ export function VideoProvider({ children }: VideoProviderProps) {
         setNewTime,
         volume,
         updateVolume,
+        list: videos,
+        selectedVideo,
+        handleVideo,
       }}
     >
       {children}
