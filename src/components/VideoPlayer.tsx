@@ -21,7 +21,8 @@ export function VideoPlayer() {
         className="flex w-full h-full data-[expand=true]:w-screen data-[expand=true]:h-screen data-[expand=true]:z-50 data-[expand=true]:absolute top-0 left-0"
       />
       <VideoControls />
-      <h1>{selectedVideo?.description}</h1>
+      <h1 className="self-start mt-2">{selectedVideo?.title}</h1>
+      <p className="self-start mt-2">{selectedVideo?.description}</p>
     </div>
   )
 }

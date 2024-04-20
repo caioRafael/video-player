@@ -22,11 +22,11 @@ export default function RootLayout({
         <VideoProvider>
           <main className="flex flex-col">
             <header className="flex items-center p-5 h-16 w-full border-b border-slate-600">
-              <h1>Peba Tube</h1>
+              <h1>Animes web</h1>
             </header>
             <div className="grid grid-cols-[1fr_300px] p-5 gap-5">
               {children}
-              <aside>
+              <aside className="h-96 overflow-scroll">
                 <ListVideos />
               </aside>
             </div>

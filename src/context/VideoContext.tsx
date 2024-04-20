@@ -81,7 +81,7 @@ export function VideoProvider({ children }: VideoProviderProps) {
     return () => {
       context.clearRect(0, 0, canvas.width, canvas.height)
     }
-  }, [isPlaying, selectedVideo])
+  }, [isPlaying, selectedVideo, selectedVideo])
 
   const handleVideo = (video: IVideo) => {
     setSelectedVideo(video)
